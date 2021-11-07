@@ -1,4 +1,4 @@
-FROM circleci/python:3.7.5
+FROM python:3.7-buster
 
 LABEL Author Kassim Benhaddad <kassim@kass.im>
 
@@ -44,6 +44,8 @@ RUN git clone https://github.com/jaedb/Iris.git /iris \
 
 # Install additional Python dependencies
 RUN python3.7 -m pip install --no-cache \
+    # work-around issue: "ffi_prep_closure(): bad user_data (it seems that the version of the libffi library seen at runtime is different from the 'ffi.h' file seen at compile-time)"
+    --no-binary cffi \
     tox \
     mopidy-mpd \
     mopidy-spotify \

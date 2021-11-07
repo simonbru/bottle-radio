@@ -1,5 +1,5 @@
 # => Build container
-FROM node:alpine as builder
+FROM node:14 as builder
 WORKDIR /app
 COPY package.json .
 COPY yarn.lock .
