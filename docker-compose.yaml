@@ -36,6 +36,7 @@ services:
       - ./.env:/tmp/.env:ro
     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.frontend.entryPoints=https"
       - "traefik.http.routers.frontend.rule=Host(`${DOMAIN}`)"
       - "traefik.http.routers.frontend.tls=true"
       - "traefik.http.routers.frontend.tls.certresolver=resolver"
@@ -54,6 +55,7 @@ services:
       - liquidsoap
     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.mopidy.entryPoints=https"
       - "traefik.http.routers.mopidy.rule=Host(`spotify.${DOMAIN}`)"
       - "traefik.http.routers.mopidy.tls=true"
       - "traefik.http.routers.mopidy.tls.certresolver=resolver"
@@ -79,8 +81,9 @@ services:
       - icecast
     labels:
       - "traefik.enable=true"
-      - "traefik.tcp.routers.liquidsoap.rule=HostSNI(`*`)"
       - "traefik.tcp.routers.liquidsoap.entryPoints=streaming"
+      - "traefik.tcp.routers.liquidsoap.rule=HostSNI(`*`)"
+      - "traefik.tcp.routers.liquidsoap.tls=true"
       - "traefik.tcp.services.liquidsoap.loadbalancer.server.port=8005"
 
   icecast:
@@ -94,6 +97,7 @@ services:
     user: root
     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.icecast.entryPoints=https"
       - "traefik.http.routers.icecast.rule=Host(`stream.${DOMAIN}`)"
       - "traefik.http.routers.icecast.tls=true"
       - "traefik.http.routers.icecast.tls.certresolver=resolver"
