@@ -40,6 +40,8 @@ services:
       - "traefik.http.routers.frontend.rule=Host(`${DOMAIN}`)"
       - "traefik.http.routers.frontend.tls=true"
       - "traefik.http.routers.frontend.tls.certresolver=resolver"
+      - "traefik.http.middlewares.frontend_auth.basicauth.users=${FRONTEND_AUTH}"
+      - "traefik.http.routers.frontend.middlewares=frontend_auth@docker"
 
   mopidy:
     build:
